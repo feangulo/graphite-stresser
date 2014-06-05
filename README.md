@@ -1,3 +1,5 @@
+#Stresser
+
 I have a Stresser application that will publish a fixed amount of metrics to the carbon-cache regularly. It uses the Coda Hale metrics library internally and more specifically, it uses a Timer object to collect data. The Stresser receives a couple of parameters:
 
 * Graphite host: in our case, the server housing our carbon cache
@@ -33,4 +35,6 @@ total 300
 -rw-r--r--. 1 root root 17308 Jun  4 11:22 stddev.wsp
 ```
 
-See the Stress Testing Carbon Caches blog post for more details: http://www.franklinangulo.com/blog/2014/5/25/graphite-series-5-stress-testing-carbon-caches
+## More Information
+
+See the [Stress Testing Carbon Caches](http://www.franklinangulo.com/blog/2014/5/25/graphite-series-5-stress-testing-carbon-caches) blog post for more details.
