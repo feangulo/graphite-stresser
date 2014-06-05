@@ -35,6 +35,6 @@ total 300
 -rw-r--r--. 1 root root 17308 Jun  4 11:22 stddev.wsp
 ```
 
-## More Information
+### More Information
 
 See the [Stress Testing Carbon Caches](http://www.franklinangulo.com/blog/2014/5/25/graphite-series-5-stress-testing-carbon-caches) blog post for more details.
