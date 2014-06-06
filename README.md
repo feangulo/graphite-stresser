@@ -55,6 +55,24 @@ total 300
 -rw-r--r--. 1 root root 17308 Jun  4 11:22 stddev.wsp
 ```
 
+### Simulate Multiple Hosts
+If you need to simulate reporting the same set of metrics from different hosts, you can modify the numHosts parameter. In this example, the application will initialize 10 timers are report the metrics from 5 different hosts:
+
+```
+$ java -jar stresser.jar localhost 2003 5 10 10 true
+Initializing 10 timers - publishing 750 metrics every 10 seconds from 5 host(s)
+Publishing metric: STRESS.host.ip-0.com.graphite.stresser.a
+Publishing metric: STRESS.host.ip-1.com.graphite.stresser.a
+Publishing metric: STRESS.host.ip-2.com.graphite.stresser.a
+Publishing metric: STRESS.host.ip-3.com.graphite.stresser.a
+Publishing metric: STRESS.host.ip-4.com.graphite.stresser.a
+Publishing metric: STRESS.host.ip-0.com.graphite.stresser.b
+Publishing metric: STRESS.host.ip-1.com.graphite.stresser.b
+Publishing metric: STRESS.host.ip-2.com.graphite.stresser.b
+Publishing metric: STRESS.host.ip-3.com.graphite.stresser.b
+Publishing metric: STRESS.host.ip-4.com.graphite.stresser.b
+```
+
 ### More Information
 
 See the [Stress Testing Carbon Caches](http://www.franklinangulo.com/blog/2014/5/25/graphite-series-5-stress-testing-carbon-caches) blog post for more details.
