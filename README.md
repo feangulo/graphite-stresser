@@ -12,7 +12,13 @@ I have a Stresser application that will publish a fixed amount of metrics to the
 You can run the Stresser using the following command:
 
 ```
-java -jar stresser.jar localhost 2003 1 128 10 false
+$ java -jar stresser.jar localhost 2003 1 128 10 true
+Initializing 128 timers - publishing 1920 metrics every 10 seconds from 1 host(s)
+Publishing metric: STRESS.host.ip-0.com.graphite.stresser.a
+Publishing metric: STRESS.host.ip-0.com.graphite.stresser.ab
+Publishing metric: STRESS.host.ip-0.com.graphite.stresser.abc
+Publishing metric: STRESS.host.ip-0.com.graphite.stresser.abcd
+...
 ```
 The Coda Hale metrics library generates 15 distinct metrics per timer:
 
