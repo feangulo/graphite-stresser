@@ -4,6 +4,7 @@ I have a Stresser application that will publish a fixed amount of metrics to the
 
 * Graphite host: in our case, the server housing our carbon cache
 * Graphite port: in our case, the carbon cache port
+* Number of hosts: to simulate publishing from
 * Number of timers: each timer generates 15 distinct metrics 
 * Publishing interval
 * Debug mode: true/false - logs the metrics that are published
@@ -11,12 +12,12 @@ I have a Stresser application that will publish a fixed amount of metrics to the
 You can run the Stresser using the following command:
 
 ```
-java -jar stresser.jar localhost 2003 128 10 false
+java -jar stresser.jar localhost 2003 1 128 10 false
 ```
 The Coda Hale metrics library generates 15 distinct metrics per timer:
 
 ```
-#ls -l /opt/graphite/storage/whisper/STRESS/host/10-0-5-70/com/graphite/stresser/feg/
+#ls -l /opt/graphite/storage/whisper/STRESS/host/ip-0/com/graphite/stresser/feg/
 total 300
 -rw-r--r--. 1 root root 17308 Jun  4 11:22 count.wsp
 -rw-r--r--. 1 root root 17308 Jun  4 11:22 m15_rate.wsp
