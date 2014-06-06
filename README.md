@@ -12,6 +12,19 @@ I have a Stresser application that will publish a fixed amount of metrics to the
 You can run the Stresser using the following command:
 
 ```
+Usage:
+
+java -jar stresser.jar host port numHosts numTimers interval debug
+
+	host: the Graphite endpoint
+	port: the Graphite port
+	numHosts: the number of hosts to simulate publishing from
+	numTimers: the number of timers to create (options: [1, 2, 3, 4, 5, 10, 20, 64, 128, 256, 384, 650, 975, 1956, 3912, 4887, 7824, 9780, 13699])
+	interval: the metric publishing interval (i.e. 10 seconds)
+	debug: true/false to enable/disable debug mode
+```
+
+```
 $ java -jar stresser.jar localhost 2003 1 128 10 true
 Initializing 128 timers - publishing 1920 metrics every 10 seconds from 1 host(s)
 Publishing metric: STRESS.host.ip-0.com.graphite.stresser.a
