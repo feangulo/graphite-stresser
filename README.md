@@ -71,6 +71,7 @@ Publishing metric: STRESS.host.ip-1.com.graphite.stresser.b
 Publishing metric: STRESS.host.ip-2.com.graphite.stresser.b
 Publishing metric: STRESS.host.ip-3.com.graphite.stresser.b
 Publishing metric: STRESS.host.ip-4.com.graphite.stresser.b
+...
 ```
 
 ### More Information
