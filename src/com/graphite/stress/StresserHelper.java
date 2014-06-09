@@ -33,30 +33,33 @@ public class StresserHelper {
 		
 	}
 	
-	public void publishMetric(String metricName, boolean isVerbose) throws IOException {
+	public void publishMetric(String metricName, int numHosts, boolean isVerbose) throws IOException {
 
-		String ipAddress = InetAddress.getLocalHost().getHostAddress().replace(".", "-");
-		String metricPrefix = "STRESS.host." + ipAddress + ".com.graphite.stresser";
+		for (int host = 0; host < numHosts; host++) {
 		
-		String fullMetricName = MetricRegistry.name(metricPrefix, metricName);
+			String metricPrefix = "STRESS.host.ip-" + host + ".com.graphite.stresser";
 		
-		if (isVerbose) {
-			System.out.println("Publishing metric: " + fullMetricName);
-		}
+			String fullMetricName = MetricRegistry.name(metricPrefix, metricName);
 		
-		final Timer timer = metricRegistry.timer(fullMetricName);
+			if (isVerbose) {
+				System.out.println("Publishing metric: " + fullMetricName);
+			}
+		
+			final Timer timer = metricRegistry.timer(fullMetricName);
 
-		final Timer.Context context = timer.time();
-		try {
+			final Timer.Context context = timer.time();
+			try {
 			
-			// doing mostly nothing
-			long sleepTime = (int) Math.random() * 100;
-			Thread.sleep(sleepTime);
+				// doing mostly nothing
+				long sleepTime = (int) Math.random() * 100;
+				Thread.sleep(sleepTime);
 			
-		} catch (Exception ex) {
-			System.out.println("Encountered exception: " + ex);
-		} finally {
-			context.stop();
+			} catch (Exception ex) {
+				System.out.println("Encountered exception: " + ex);
+			} finally {
+				context.stop();
+			}
+		
 		}
 		
 	}

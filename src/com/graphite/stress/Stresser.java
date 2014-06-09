@@ -35,22 +35,24 @@ public class Stresser {
 	
 	public static void main(String args[]) throws IOException, InterruptedException {
 		
-		if (args.length != 5) {
-			System.out.println("Usage:\n");
-			System.out.println("java -jar stresser.jar host port numTimers interval debug\n");
-			System.out.println("\thost: the Graphite endpoint");
-			System.out.println("\tport: the Graphite port");
-			System.out.println("\tnumTimers: the number of timers to create (options: " + timerOptions.toString() + ")");
-			System.out.println("\tinterval: the metric publishing interval (i.e. 10 seconds)");
-			System.out.println("\tdebug: true/false to enable/disable debug mode");
+		if (args.length != 6) {
+			System.err.println("Usage:\n");
+			System.err.println("java -jar stresser.jar host port numHosts numTimers interval debug\n");
+			System.err.println("\thost: the Graphite endpoint");
+			System.err.println("\tport: the Graphite port");
+			System.err.println("\tnumHosts: the number of hosts to simulate publishing from");
+			System.err.println("\tnumTimers: the number of timers to create (options: " + timerOptions.toString() + ")");
+			System.err.println("\tinterval: the metric publishing interval (i.e. 10 seconds)");
+			System.err.println("\tdebug: true/false to enable/disable debug mode");
 			System.exit(1);
 		}
 		
 		String graphiteEndpoint = String.valueOf(args[0]);
 		int graphitePort = Integer.valueOf(args[1]);
-		int numTimers = Integer.valueOf(args[2]);
-		int publishingInterval = Integer.valueOf(args[3]);
-		boolean isVerbose = Boolean.valueOf(args[4]);
+		int numHosts = Integer.valueOf(args[2]);
+		int numTimers = Integer.valueOf(args[3]);
+		int publishingInterval = Integer.valueOf(args[4]);
+		boolean isVerbose = Boolean.valueOf(args[5]);
 		
 		boolean validTimerOption = false;
 		for (int option : timerOptions) {
@@ -307,7 +309,7 @@ public class Stresser {
 			
 		}
 		
-		System.out.println("Initializing " + metricNames.size() + " timers - publishing " + metricNames.size() * 15 + " metrics every " + publishingInterval + " seconds");
+		System.out.println("Initializing " + metricNames.size() + " timers - publishing " + metricNames.size() * 15 * numHosts + " metrics every " + publishingInterval + " seconds from " + numHosts + " host(s)");
 		
 		StresserHelper helper = new StresserHelper(graphiteEndpoint, graphitePort, publishingInterval);
 		
@@ -316,7 +318,7 @@ public class Stresser {
 			// For each of the metric names generated, initialize a timer and report the metric continuously.
 			for (String metricName : metricNames) {
 
-				helper.publishMetric(metricName, isVerbose);
+				helper.publishMetric(metricName, numHosts, isVerbose);
 
 			}
 			
