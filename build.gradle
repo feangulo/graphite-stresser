@@ -1,0 +1,28 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.codahale.metrics:metrics-core:3.0.1'
+    compile 'com.codahale.metrics:metrics-graphite:3.0.2'
+    compile 'org.slf4j:slf4j-api:1.7.13'
+    compile 'org.slf4j:slf4j-simple:1.7.13'
+}
+
+version = '0.1'
+
+mainClassName = "com.graphite.stress.Stresser"
+
+//create a single Jar with all dependencies
+task uberjar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Version': version,
+            'Main-Class': mainClassName
+    }
+    baseName = project.name
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
