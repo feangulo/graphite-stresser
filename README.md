@@ -1,11 +1,11 @@
-#Stresser
+# Stresser
 
-I have a Stresser application that will publish a fixed amount of metrics to the carbon-cache regularly. It uses the Coda Hale metrics library internally and more specifically, it uses a Timer object to collect data. The Stresser receives a couple of parameters:
+The Stresser application will publish a fixed amount of metrics to the carbon-cache regularly. It uses the Coda Hale metrics library internally and more specifically, it uses a Timer object to collect data. The Stresser receives a couple of parameters:
 
 * Graphite host: in our case, the server housing our carbon cache
 * Graphite port: in our case, the carbon cache port
 * Number of hosts: to simulate publishing from
-* Number of timers: each timer generates 15 distinct metrics 
+* Number of timers: each timer generates 15 distinct metrics
 * Publishing interval
 * Debug mode: true/false - logs the metrics that are published
 
@@ -14,7 +14,7 @@ You can run the Stresser using the following command:
 ```
 Usage:
 
-java -jar stresser.jar host port numHosts numTimers interval debug
+java -jar graphite-stresser.jar host port numHosts numTimers interval debug
 
 	host: the Graphite endpoint
 	port: the Graphite port
@@ -25,7 +25,7 @@ java -jar stresser.jar host port numHosts numTimers interval debug
 ```
 
 ```
-$ java -jar stresser.jar localhost 2003 1 128 10 true
+$ java -jar graphite-stresser.jar localhost 2003 1 128 10 true
 Initializing 128 timers - publishing 1920 metrics every 10 seconds from 1 host(s)
 Publishing metric: STRESS.host.ip-0.com.graphite.stresser.a
 Publishing metric: STRESS.host.ip-0.com.graphite.stresser.ab
@@ -59,7 +59,7 @@ total 300
 If you need to simulate reporting the same set of metrics from different hosts, you can modify the numHosts parameter. In this example, the application will initialize 10 timers are report the metrics from 5 different hosts:
 
 ```
-$ java -jar stresser.jar localhost 2003 5 10 10 true
+$ java -jar graphite-stresser.jar localhost 2003 5 10 10 true
 Initializing 10 timers - publishing 750 metrics every 10 seconds from 5 host(s)
 Publishing metric: STRESS.host.ip-0.com.graphite.stresser.a
 Publishing metric: STRESS.host.ip-1.com.graphite.stresser.a
@@ -72,6 +72,42 @@ Publishing metric: STRESS.host.ip-2.com.graphite.stresser.b
 Publishing metric: STRESS.host.ip-3.com.graphite.stresser.b
 Publishing metric: STRESS.host.ip-4.com.graphite.stresser.b
 ...
+```
+
+### Building
+
+Building the jar is done through Gradle:
+
+```
+$ ./gradlew uberjar
+```
+
+The built executable jar is now located at `build/libs`
+
+You can also build a docker image:
+
+```
+$ ./gradlew buildDocker
+$ docker images | grep graphite
+banno/graphite-stresser                                0.1                 dcdaf3514818        4 minutes ago       310.6 MB
+```
+
+### Docker
+
+If you would like to just run with docker:
+
+```
+$ docker run -it banno/graphite-stresser:0.1
+Usage:
+
+java -jar stresser.jar host port numHosts numTimers interval debug
+
+        host: the Graphite endpoint
+        port: the Graphite port
+        numHosts: the number of hosts to simulate publishing from
+        numTimers: the number of timers to create (options: [1, 2, 3, 4, 5, 10, 20, 64, 128, 256, 384, 650, 975, 1956, 3912, 4887, 7824, 9780, 13699])
+        interval: the metric publishing interval (i.e. 10 seconds)
+        debug: true/false to enable/disable debug mode
 ```
 
 ### More Information

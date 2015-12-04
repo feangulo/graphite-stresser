@@ -1,5 +1,13 @@
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'docker'
+
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+    }
+}
 
 repositories {
     mavenCentral()
@@ -14,6 +22,9 @@ dependencies {
 
 version = '0.1'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 mainClassName = "com.graphite.stress.Stresser"
 
 //create a single Jar with all dependencies
@@ -25,4 +36,21 @@ task uberjar(type: Jar) {
     baseName = project.name
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
+}
+
+group = "banno"
+
+docker {
+    baseImage "java:8-jre"
+}
+
+task buildDocker(type: Docker, dependsOn: 'uberjar') {
+    doFirst {
+        copy {
+            from uberjar
+            into stageDir
+        }
+    }
+    addFile("graphite-stresser-0.1.jar", "/opt/graphite-stresser/")
+    entryPoint(["java", "-jar", "/opt/graphite-stresser/graphite-stresser-0.1.jar"])
 }
