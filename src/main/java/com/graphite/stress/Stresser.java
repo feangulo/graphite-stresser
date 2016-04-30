@@ -37,7 +37,7 @@ public class Stresser {
 		
 		if (args.length != 6) {
 			System.err.println("Usage:\n");
-			System.err.println("java -jar stresser.jar host port numHosts numTimers interval debug\n");
+			System.err.println("java -jar graphite-stresser.jar host port numHosts numTimers interval debug\n");
 			System.err.println("\thost: the Graphite endpoint");
 			System.err.println("\tport: the Graphite port");
 			System.err.println("\tnumHosts: the number of hosts to simulate publishing from");
